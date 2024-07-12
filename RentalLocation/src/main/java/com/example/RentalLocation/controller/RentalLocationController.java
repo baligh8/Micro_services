@@ -19,13 +19,13 @@ public class RentalLocationController {
         return rentalLocationService.getAllRentalLocations();
     }
 
-    @GetMapping("/{id}")
+   /* @GetMapping("/{id}")
     public RentalLocationDTO getRentalLocationById(@PathVariable Long id) {
         return rentalLocationService.getRentalLocationById(id);
-    }
+    }*/
 
     @GetMapping("/detaile/{id}")
-    public RentalLocationDTO getDetaileLocationById(@PathVariable Long id) {
+    public RentalLocationDTO getDetaileLocationById(@PathVariable String id) {
         return rentalLocationService.getDetaileLocationById(id);
     }
 
@@ -36,13 +36,16 @@ public class RentalLocationController {
     }
 
 
+
+/*
+
     @PutMapping("/update-rentalLocation/{id}")
-    public RentalLocationDTO updateRentalLocation(@PathVariable Long id, @RequestBody RentalLocationDTO updatedRentalLocationDTO) {
-        return rentalLocationService.updateRentalLocation(id, updatedRentalLocationDTO);
-    }
+    public RentalLocationDTO updateRentalLocation(@PathVariable Long id, @RequestBody RentalLocation updatedRentalLocation) {
+        return rentalLocationService.updateRentalLocation(id, updatedRentalLocation);
+    }*/
 
     @DeleteMapping("/delete-rentalLocation/{id}")
-    public void deleteRentalLocation(@PathVariable Long id) {
+    public void deleteRentalLocation(@PathVariable String id) {
         rentalLocationService.deleteRentalLocation(id);
     }
 }

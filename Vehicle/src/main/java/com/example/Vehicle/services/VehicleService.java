@@ -51,7 +51,10 @@ public class VehicleService {
             throw new IllegalArgumentException("Vehicle not found");
         }
     }
-
+    public List<VehicleDTO> getVehicleByRentalLocationID(String rentalLocationID){
+        List<Vehicle> vehicles = vehicleRepository.findByRentalLocationID(rentalLocationID);
+        return  vehicles.stream().map(vehicleMapper::VEHICLE_toDTO).collect(Collectors.toList());
+    }
 
     public VehicleDTO updateVehicle(Long id,Vehicle vehicle) {
             Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
@@ -59,13 +62,13 @@ public class VehicleService {
                 Vehicle vehicle1 = optionalVehicle.get();
                 vehicle1.setMake(vehicle.getMake());
                 vehicle1.setLicensePlate(vehicle.getLicensePlate());
-                vehicle1.setRentalLocationID(vehicle.getRentalLocationID()); // Update author if needed
+                vehicle1.setRentalLocationID(vehicle.getRentalLocationID());
                 vehicleRepository.save(vehicle1);
 
                 RentalLocationDTO rentalLocationDTO = rentalLocationClient.getDetaileLocationById(vehicle1.getRentalLocationID());
                 return new VehicleDTO(vehicle1.getId(), vehicle1.getMake(), vehicle1.getModel(),vehicle1.getLicensePlate(), rentalLocationDTO);
             } else {
-                throw new IllegalArgumentException("Book not found");
+                throw new IllegalArgumentException("Vehicle not found");
             }
         }
 

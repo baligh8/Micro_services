@@ -33,6 +33,11 @@ public class VehicleController {
     public VehicleDTO retrieveVehicle(@PathVariable("id")  Long id) {
         return vehicleService.getVehicleById(id);
     }
+    @GetMapping("/retrieveVehicle/{id}")
+    public List<VehicleDTO> retrieveVehicleByRentalLocationID(@PathVariable("id")  String id) {
+        return vehicleService.getVehicleByRentalLocationID(id);
+    }
+
 
     @DeleteMapping("/delete-vehicle/{id}")
     public void deleteVehicle(@PathVariable("id") Long id) {

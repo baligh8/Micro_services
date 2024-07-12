@@ -21,6 +21,6 @@ public class Vehicle implements Serializable {
     private String make;
     private String model;
     private String licensePlate;
-    private Long rentalLocationID;
+    private String rentalLocationID;
 }
 

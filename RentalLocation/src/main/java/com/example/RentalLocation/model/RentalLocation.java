@@ -1,27 +1,22 @@
 package com.example.RentalLocation.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Builder
-public class RentalLocation implements Serializable {
+@AllArgsConstructor
+@Document(collection = "RentalLocation")
+public class RentalLocation  {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     private String name;
     private String address;
     private String manager;
-    private Long vehicleID;
-   // private List<Long> vehicleID;
+
 }
