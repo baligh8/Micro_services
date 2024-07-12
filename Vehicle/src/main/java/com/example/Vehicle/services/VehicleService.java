@@ -1,6 +1,8 @@
 package com.example.Vehicle.services;
 
 
+import com.example.Vehicle.feignClient.RentalLocationClient;
+import com.example.Vehicle.model.RentalLocationDTO;
 import com.example.Vehicle.model.VehicleDTO;
 import com.example.Vehicle.repository.VehicleRepository;
 import com.example.Vehicle.mapper.VehicleMapper;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
@@ -20,6 +23,8 @@ public class VehicleService {
     private VehicleMapper vehicleMapper;
     @Autowired
     private VehicleRepository vehicleRepository;
+    @Autowired
+    private RentalLocationClient rentalLocationClient;
 
 
     public VehicleDTO createVehicle(Vehicle vehicle) {
@@ -28,24 +33,42 @@ public class VehicleService {
     }
 
     public List<VehicleDTO> getAllVehicles() {
-        return vehicleRepository.findAll().stream()
-                .map(vehicleMapper::VEHICLE_toDTO)
-                .collect(Collectors.toList());
+         return vehicleRepository.findAll().stream().map(vehicle -> {
+             return  getVehicleById(vehicle.getId());
+         }).collect(Collectors.toList());
     }
 
 
 
     public VehicleDTO getVehicleById(Long id) {
-        return vehicleRepository.findById(id)
-                .map(vehicleMapper::VEHICLE_toDTO)
-                .orElse(null);
+         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
+        if (optionalVehicle.isPresent()) {
+            Vehicle vehicle = optionalVehicle.get();
+            VehicleDTO vehicleDTO = vehicleMapper.VEHICLE_toDTO(vehicle);
+           var location = rentalLocationClient.getDetaileLocationById(vehicle.getRentalLocationID());
+           return new VehicleDTO(vehicleDTO.getId(), vehicleDTO.getMake(),vehicleDTO.getModel(),vehicleDTO.getLicensePlate(), location );
+        }else {
+            throw new IllegalArgumentException("Vehicle not found");
+        }
     }
 
-    public VehicleDTO updateVehicle(VehicleDTO vehicleDTO) {
-        Vehicle vehicle = vehicleMapper.VEHICLE_toEntity(vehicleDTO);
-        vehicle = vehicleRepository.save(vehicle);
-        return vehicleMapper.VEHICLE_toDTO(vehicle);
-    }
+
+    public VehicleDTO updateVehicle(Long id,Vehicle vehicle) {
+            Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
+            if (optionalVehicle.isPresent()) {
+                Vehicle vehicle1 = optionalVehicle.get();
+                vehicle1.setMake(vehicle.getMake());
+                vehicle1.setLicensePlate(vehicle.getLicensePlate());
+                vehicle1.setRentalLocationID(vehicle.getRentalLocationID()); // Update author if needed
+                vehicleRepository.save(vehicle1);
+
+                RentalLocationDTO rentalLocationDTO = rentalLocationClient.getDetaileLocationById(vehicle1.getRentalLocationID());
+                return new VehicleDTO(vehicle1.getId(), vehicle1.getMake(), vehicle1.getModel(),vehicle1.getLicensePlate(), rentalLocationDTO);
+            } else {
+                throw new IllegalArgumentException("Book not found");
+            }
+        }
+
 
     public void deleteVehicle(Long id) {
         vehicleRepository.deleteById(id);

@@ -19,15 +19,22 @@ public class RentalLocationController {
         return rentalLocationService.getAllRentalLocations();
     }
 
-    @GetMapping("/retrieve-rentalLocation/{id}")
+    @GetMapping("/{id}")
     public RentalLocationDTO getRentalLocationById(@PathVariable Long id) {
         return rentalLocationService.getRentalLocationById(id);
     }
+
+    @GetMapping("/detaile/{id}")
+    public RentalLocationDTO getDetaileLocationById(@PathVariable Long id) {
+        return rentalLocationService.getDetaileLocationById(id);
+    }
+
 
     @PostMapping("/add-rentalLocation")
     public RentalLocationDTO createRentalLocation(@RequestBody RentalLocation rentalLocation) {
         return rentalLocationService.createRentalLocation(rentalLocation);
     }
+
 
     @PutMapping("/update-rentalLocation/{id}")
     public RentalLocationDTO updateRentalLocation(@PathVariable Long id, @RequestBody RentalLocationDTO updatedRentalLocationDTO) {

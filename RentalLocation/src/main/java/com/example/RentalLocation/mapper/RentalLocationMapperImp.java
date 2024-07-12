@@ -17,6 +17,8 @@ public class RentalLocationMapperImp implements RentalLocationMapper{
         RentalLocationDTO rentalLocationDTO = new RentalLocationDTO();
         rentalLocationDTO.setId(rentalLocation.getId());
         rentalLocationDTO.setName(rentalLocation.getName());
+        rentalLocationDTO.setName(rentalLocation.getAddress());
+        rentalLocationDTO.setName(rentalLocation.getManager());
         return rentalLocationDTO;
     }
 
