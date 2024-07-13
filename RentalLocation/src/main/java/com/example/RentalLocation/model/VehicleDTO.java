@@ -1,18 +1,17 @@
-package com.example.RentalLocation.fiegnClient;
+package com.example.RentalLocation.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class VehicleDTO {
 
-
-    private Long id;
+    private String id;
     private String make;
     private String model;
 

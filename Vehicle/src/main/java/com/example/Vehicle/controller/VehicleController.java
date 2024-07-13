@@ -31,37 +31,22 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     public VehicleDTO retrieveVehicle(@PathVariable("id")  Long id) {
-
         return vehicleService.getVehicleById(id);
     }
+    @GetMapping("/retrieveVehicle/{id}")
+    public List<VehicleDTO> retrieveVehicleByRentalLocationID(@PathVariable("id")  String id) {
+        return vehicleService.getVehicleByRentalLocationID(id);
+    }
+
 
     @DeleteMapping("/delete-vehicle/{id}")
-    public void deleteArticle(@PathVariable("id") Long id) {
-
+    public void deleteVehicle(@PathVariable("id") Long id) {
         vehicleService.deleteVehicle(id);
     }
 
-    @PutMapping("/update-vehicle")
-    public VehicleDTO updateArticle(@RequestBody VehicleDTO VehicleDTO) {
+    @PutMapping("/{id}")
+    public VehicleDTO updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+        return vehicleService.updateVehicle(id,vehicle);
+    }
 
-        return vehicleService.updateVehicle(VehicleDTO);
-    }
-    public List<Vehicle> getListOfVehicle(List<Long> listIDV) {
-        List<Vehicle> listOfVehicles = new ArrayList<>();
-        for (Long id : listIDV) {
-            Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
-            if (optionalVehicle.isPresent()) {
-                listOfVehicles.add(optionalVehicle.get());
-            }
-        }
-        return listOfVehicles;
-    }
-   /* public List<Vehicle> getListofvucke(ListIDV<Long id>){
-        List<Vehicle> LisOfvehicle = new ArrayList<Vehicle>();
-        for (v in ListIDV){
-            Vehicle vehicle = VehicleRepository.findById(V).get();
-            LisOfvehicle.set(Vehicle);
-        }
-        return LisOfvehicle;
-    }*/
 }

@@ -20,8 +20,7 @@ public class Vehicle implements Serializable {
     private Long id;
     private String make;
     private String model;
-    private int year;
     private String licensePlate;
-  //  private Long RentalLocationID;
+    private String rentalLocationID;
 }
 
