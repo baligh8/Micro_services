@@ -5,8 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "RentalLocation-SERVICE", url = "http://localhost:8082/app/rental-locations")
+@FeignClient(value = "RENTALLOCATION-MS")
 public interface RentalLocationClient {
-    @GetMapping("/detaile/{id}")
-    public RentalLocationDTO getDetaileLocationById(@PathVariable String id) ;
+    @GetMapping("/app/rental-locations/detaile/{id}")
+     RentalLocationDTO getDetaileLocationById(@PathVariable String id) ;
 }

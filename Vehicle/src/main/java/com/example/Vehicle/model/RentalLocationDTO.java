@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RentalLocationDTO {
-    private Long id;
+    private String id;
     private String name;
     private String address;
     private String manager;
