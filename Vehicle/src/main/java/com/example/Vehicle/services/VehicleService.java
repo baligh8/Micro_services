@@ -33,9 +33,7 @@ public class VehicleService {
     }
 
     public List<VehicleDTO> getAllVehicles() {
-         return vehicleRepository.findAll().stream().map(vehicle -> {
-             return  getVehicleById(vehicle.getId());
-         }).collect(Collectors.toList());
+         return vehicleRepository.findAll().stream().map(vehicle -> getVehicleById(vehicle.getId())).collect(Collectors.toList());
     }
 
 

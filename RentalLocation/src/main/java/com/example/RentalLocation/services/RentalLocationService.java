@@ -46,9 +46,7 @@ public class RentalLocationService {
     public RentalLocationDTO getDetaileLocationById(String id) {
         RentalLocation rentalLocation = rentalLocationRepository.findById(id).orElse(null);
         if (rentalLocation != null) {
-            var vehicles = getVehicleById(rentalLocation.getId());
-            var rentalLocationDTO = rentalLocationMapper.RENTALLOCATION_toDTO(rentalLocation);
-            return  new RentalLocationDTO(rentalLocationDTO.getId(), rentalLocation.getName(),rentalLocation.getAddress(),rentalLocation.getManager(),vehicles);
+           return rentalLocationMapper.RENTALLOCATION_toDTO(rentalLocation);
         }
         return null;
     }
