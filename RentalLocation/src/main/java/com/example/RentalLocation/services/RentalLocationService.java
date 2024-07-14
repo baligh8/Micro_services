@@ -57,7 +57,7 @@ public class RentalLocationService {
 
     }
     public List<VehicleDTO> getVehicleById(String locationID) {
-        String url = "http://localhost:8081/app/vehicle/retrieveVehicle/" + locationID;
+        String url = "http://localhost:8081/vehicle/retrieveVehicle/" + locationID;
         ResponseEntity<VehicleDTO[]> responseEntity = restTemplate.getForEntity(url, VehicleDTO[].class);
         VehicleDTO[] vehicleDTO = responseEntity.getBody();
         if (vehicleDTO == null) {
