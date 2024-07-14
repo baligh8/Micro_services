@@ -1,11 +1,11 @@
 package com.example.RentalLocation.controller;
 
+
 import com.example.RentalLocation.model.RentalLocation;
 import com.example.RentalLocation.model.RentalLocationDTO;
 import com.example.RentalLocation.services.RentalLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
