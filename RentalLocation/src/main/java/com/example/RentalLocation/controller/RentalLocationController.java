@@ -3,8 +3,10 @@ package com.example.RentalLocation.controller;
 
 import com.example.RentalLocation.model.RentalLocation;
 import com.example.RentalLocation.model.RentalLocationDTO;
+import com.example.RentalLocation.model.VehicleDTO;
 import com.example.RentalLocation.services.RentalLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -48,5 +50,14 @@ public class RentalLocationController {
     public void deleteRentalLocation(@PathVariable String id) {
         rentalLocationService.deleteRentalLocation(id);
     }
+
+
+    //kafka
+    @GetMapping("/received-vehicle")
+    public ResponseEntity<List<VehicleDTO>> getReceivedAuthors() {
+        List<VehicleDTO> authors = rentalLocationService.receivedVehicle();
+        return ResponseEntity.ok(authors);
+    }
+
 }
 

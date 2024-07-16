@@ -49,4 +49,11 @@ public class VehicleController {
         return vehicleService.updateVehicle(id,vehicle);
     }
 
+    //KAFAK
+    @GetMapping("/kafka-allV")
+    public List<VehicleDTO> getVehiclekafka() {
+        return vehicleService.getAllVehicleskafka();
+    }
+
+
 }

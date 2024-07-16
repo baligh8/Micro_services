@@ -9,9 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,8 @@ public class RentalLocationService {
     private final RestTemplate restTemplate;
     @Autowired
     private RentalLocationRepository rentalLocationRepository;
+    private final List<VehicleDTO> receivedVehicle = new ArrayList<>();
+
 
 
     public RentalLocationDTO createRentalLocation(RentalLocation rentalLocation) {
@@ -64,6 +68,18 @@ public class RentalLocationService {
             throw new IllegalStateException("Failed to fetch Vehicle from the external service");
         }
         return Arrays.asList(vehicleDTO);
+    }
+
+
+    //kafka
+    @KafkaListener(topics = "vehicle_topic", groupId = "rentalLocation-group")
+    public void listen(List<VehicleDTO> vehicle) {
+        System.out.println("Received vehicle: " + vehicle);
+        receivedVehicle.addAll(vehicle);
+    }
+
+    public List<VehicleDTO> receivedVehicle() {
+        return new ArrayList<>(receivedVehicle);
     }
 
 
