@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +34,9 @@ public class VehicleService {
 
 
     public VehicleDTO createVehicle(Vehicle vehicle) {
-        vehicle = vehicleRepository.save(vehicle);
-        return vehicleMapper.VEHICLE_toDTO(vehicle);
+        RentalLocationDTO rentalLocation = rentalLocationClient.getDetaileLocationById(vehicle.getRentalLocationID());
+        VehicleDTO vehicleDTO = vehicleMapper.VEHICLE_toDTO(vehicleRepository.save(vehicle));
+        return new VehicleDTO(vehicleDTO.getId(), vehicleDTO.getMake(), vehicleDTO.getModel(),vehicleDTO.getLicensePlate(), rentalLocation);
     }
 
     public List<VehicleDTO> getAllVehicles() {

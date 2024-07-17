@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,11 +49,15 @@ public class RentalLocationService {
     }
 
     public RentalLocationDTO getDetaileLocationById(String id) {
-        RentalLocation rentalLocation = rentalLocationRepository.findById(id).orElse(null);
-        if (rentalLocation != null) {
-           return rentalLocationMapper.RENTALLOCATION_toDTO(rentalLocation);
+        Optional<RentalLocation> optionalRentalLocation = rentalLocationRepository.findById(id);
+
+        if (optionalRentalLocation.isPresent()) {
+            RentalLocation rentalLocation = optionalRentalLocation.get();
+            var rentalLocationDto =  rentalLocationMapper.RENTALLOCATION_toDTO(rentalLocation);
+            return rentalLocationDto;
+        } else {
+            throw new IllegalArgumentException("RentalLocation not found with id: " + id);
         }
-        return null;
     }
 
 
